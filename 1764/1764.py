@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1764 듣보잡 <Silver IV>"
+
 n, m = map(int, stdin.readline().split())
 
 NotSeen = {}
