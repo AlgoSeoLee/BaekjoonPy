@@ -1,4 +1,4 @@
-name: before_main
+name: auto comment
 on: push
 jobs:
   changes:
@@ -15,3 +15,7 @@ jobs:
       - name: execute python script
         run: |
           python add_comment.py '${{ steps.file_changes.outputs.files_added }}'
+      - name: add and commit
+        uses: Endbug/add-and-commit@v7
+        with:
+          message: auto comment for '${{ steps.file_changes.outputs.files_added }}'
