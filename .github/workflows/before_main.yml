@@ -1,0 +1,15 @@
+name: before_main
+on: push
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    steps:
+      - id: file_changes
+        uses: trilom/file-changes-action@v1.2.3
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: execute python script
+        run: |
+          python add_comment.py '${{ steps.file_changes.outputs.files_added }}'
