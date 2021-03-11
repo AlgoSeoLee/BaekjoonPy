@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/11047 동전 0 <Silver II>"
+
 types, won = map(int, stdin.readline().split())
 
 coins = []
