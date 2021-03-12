@@ -1,5 +1,7 @@
 from sys import stdin, setrecursionlimit
 
+"https://www.acmicpc.net/problem/11724 연결 요소의 개수 <Silver II>"
+
 def _DFS(vertex, visited, N):
     visited[N] = True
     for i in vertex[N]:
