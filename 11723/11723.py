@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/11723 집합 <Silver V>"
+
 EMPTY = 0b00000000000000000000
 ALL = 0b11111111111111111111
 
