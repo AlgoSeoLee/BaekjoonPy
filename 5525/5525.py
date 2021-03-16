@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/5525 IOIOI <Silver II>"
+
 ioi = int(stdin.readline())
 length = int(stdin.readline())
 p = stdin.readline()
