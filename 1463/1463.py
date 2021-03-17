@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1463 1로 만들기 <Silver III>"
+
 OUT = 10**6 + 1
 
 dp = [0, 1, 1]
