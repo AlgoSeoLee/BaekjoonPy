@@ -1,5 +1,7 @@
 from sys import stdin
 import re
+"https://www.acmicpc.net/problem/3865 학회원 <Gold IV>"
+
 
 SPLIT = re.compile(r"[:,]")
 
