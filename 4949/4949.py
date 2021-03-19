@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/4949 균형잡힌 세상 <Silver IV>"
+
 while True:
     line = stdin.readline().rstrip()
     if line == ".":
