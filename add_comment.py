@@ -53,7 +53,7 @@ if __name__ == "__main__":
             code = None
             while not end_of_import:
                 line = target.readline()
-                if line.find("import") <= 0:
+                if line.find("import") < 0:
                     end_of_import = True
                     where = target.tell()
                     code = target.read()
