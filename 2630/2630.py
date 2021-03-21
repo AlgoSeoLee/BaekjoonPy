@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/2630 색종이 만들기 <Silver III>"
+
 def isDiff(target):
     diff = False
     tester = None
