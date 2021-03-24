@@ -1,6 +1,8 @@
 from sys import stdin
 from queue import Queue
 
+"https://www.acmicpc.net/problem/2667 단지번호붙이기 <Silver I>"
+
 def _BFS(matrix, visited, size, x, y):
     queue = Queue()
 
