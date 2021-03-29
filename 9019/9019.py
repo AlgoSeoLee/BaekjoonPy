@@ -1,6 +1,8 @@
 from sys import stdin
 from queue import Queue
 
+"https://www.acmicpc.net/problem/9019 DSLR <Gold V>"
+
 def integer_to_digit(number):
     register = str(number)
     return "0" * (4 - len(register)) + register
