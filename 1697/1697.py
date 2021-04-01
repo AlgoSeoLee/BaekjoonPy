@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1697 숨바꼭질 <Silver I>"
+
 def hide_and_seek(origin, target):
     queue = []
     visited = [False for i in range(100001)]
