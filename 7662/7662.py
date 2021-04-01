@@ -1,6 +1,8 @@
 from sys import stdin
 from heapq import heappush, heappop
 
+"https://www.acmicpc.net/problem/7662 이중 우선순위 큐 <Gold V>"
+
 for _ in range(int(stdin.readline())):
     largest = []
     smallest = []
