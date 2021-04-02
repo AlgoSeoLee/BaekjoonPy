@@ -1,6 +1,8 @@
 from sys import stdin
 from enum import Enum
 
+"https://www.acmicpc.net/problem/7576 토마토 <Silver I>"
+
 Tomato = Enum("Tomato", "RIPE UNRIPE EMPTY")
 
 def dispensing_tomato(state):
