@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1780 종이의 개수 <Silver II>"
+
 def check_one_color(paper):
     colors = set()
     invalid = False
