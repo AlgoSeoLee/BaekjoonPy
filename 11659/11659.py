@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/11659 구간 합 구하기 4 <Silver III>"
+
 def get_integers():
     return map(int, stdin.readline().split())
 
