@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/2579 계단 오르기 <Silver III>"
+
 num_of_stair = int(stdin.readline())
 stairs = [int(stdin.readline()) for _ in range(num_of_stair)]
 stairs.insert(0, 0)
