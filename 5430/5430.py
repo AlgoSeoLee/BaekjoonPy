@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/5430 AC <Gold V>"
+
 num_of_test = int(stdin.readline())
 
 for _ in range(num_of_test):
