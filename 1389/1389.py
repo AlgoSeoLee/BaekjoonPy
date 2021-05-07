@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/1389 케빈 베이컨의 6단계 법칙 <Silver I>"
+
 class Graph:
     def __init__(self, num_of_vertex, is_bidirection = True, is_zero_index = False):
         self.num_of_vertex = num_of_vertex
