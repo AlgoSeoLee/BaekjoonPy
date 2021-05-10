@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/9375 패션왕 신해빈 <Silver III>"
+
 num_of_test = int(stdin.readline())
 
 for _ in range(num_of_test):
