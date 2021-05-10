@@ -9,11 +9,11 @@ def integer_to_array(number):
         array.append((number // (10 ** (3 - i))) % 10)
     return array
 
-def array_to_integer(array):
-    integer = 0
-    for i in range(4):
-        integer += array[i] * (10 ** (3 - i))
-    return integer 
+def register_shift_left(integer):
+    return (integer % 1000) * 10 + integer // 1000
+
+def register_shift_right(integer):
+    return integer // 10 + integer % 10 * 1000
 
 def search_command(origin, target):
     queue = deque()
@@ -37,19 +37,19 @@ def search_command(origin, target):
             arr = integer_to_array(number)
             elem = set(arr)
             if len(elem) != 1 and priv_command != 'L' and priv_command != 'R':
-                left = arr 
-                right = left.copy()
+                left = number
+                right = number
                 left_command = command
                 right_command = command
                 for _ in range(2):
-                    left = left[1:4] + [left[0]]
-                    right = [right[3]] + right[0:3]
+                    left = register_shift_left(left)
+                    right = register_shift_right(right)
                     left_command += 'L'
                     right_command += 'R'
                     new_commands.append(
-                        (array_to_integer(left), left_command))
+                        (left, left_command))
                     new_commands.append(
-                        (array_to_integer(right), right_command))
+                        (right, right_command))
     
             for c in new_commands:
                 if c[0] == target:
