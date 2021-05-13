@@ -2,20 +2,28 @@ from sys import stdin
 
 "https://www.acmicpc.net/problem/5525 IOIOI <Silver II>"
 
-ioi = int(stdin.readline())
-length = int(stdin.readline())
-p = stdin.readline()
+num_of_O = int(stdin.readline())
+stdin.readline()
+plain = stdin.readline()
 
+condition = 'I' + 'OI' * num_of_O
+
+level = 0
+maximum_level = len(condition) - 1
 result = 0
-cur = 0
-limit = length - ioi * 2
-condition = 'I' + 'OI' * ioi
-while cur < limit:
-    if p[cur] == 'I' and p[cur:cur+2*ioi+1] == condition:
-        result += 1
-        cur += 2
+
+for current in plain:
+    target = condition[level]
+    if current == target:
+        if level == maximum_level:
+            level = 1
+            result += 1
+        else:
+            level += 1
+    elif target == 'I':
+        level = 1
     else:
-        cur += 1
+        level = 0
 
 print(result)
 
