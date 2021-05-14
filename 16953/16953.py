@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/16953 A → B <Silver I>"
+
 def BFS(start, target):
     queue = deque()
     visited = {}
