@@ -21,16 +21,11 @@ def search_command(origin, target):
         if number == target:
             return command
  
-        left = register_shift_left(number)
-        right = register_shift_right(number)
-        left_command = command + 'L'
-        right_command = command + 'R'
-
         new_commands = [
             (number * 2 % 10000, command + "D"),
             (number - 1 if number != 0 else 9999, command + "S"),
-            (left, left_command),
-            (right, right_command)]
+            (register_shift_left(number), command + 'L'),
+            (register_shift_right(number), command + 'R')]
 
 
         for c in new_commands:
