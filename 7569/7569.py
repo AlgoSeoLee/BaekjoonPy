@@ -2,6 +2,8 @@ from sys import stdin
 from collections import deque
 from enum import Enum
 
+"https://www.acmicpc.net/problem/7569 토마토 <Silver I>"
+
 Tomato = Enum("Tomato", "RIPE UNRIPE EMPTY")
 
 def dispensing_tomato(state):
