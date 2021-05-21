@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1992 쿼드트리 <Silver I>"
+
 dispense_data = lambda x: 1 if x == '1' else 0
 
 def generate_quad_tree(data, size):
