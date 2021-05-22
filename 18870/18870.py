@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/18870 좌표 압축 <Silver II>"
+
 length_coordinate = int(stdin.readline())
 coordinates = list(map(int, stdin.readline().split()))
 
