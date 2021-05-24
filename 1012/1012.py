@@ -2,6 +2,8 @@ from sys import stdin
 from collections import deque
 from enum import Enum
 
+"https://www.acmicpc.net/problem/1012 유기농 배추 <Silver II>"
+
 Plant = Enum("Plant", "lettuce empty")
 
 def calc_num_of_earthworm(plants, total_x, total_y):
