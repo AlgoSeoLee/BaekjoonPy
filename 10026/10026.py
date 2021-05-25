@@ -3,6 +3,8 @@ from collections import deque
 from enum import Enum
 from functools import reduce
 
+"https://www.acmicpc.net/problem/10026 적록색약 <Gold V>"
+
 RGB = Enum("RGB", "Red Green Blue RedGreen")
 
 def dispense_RGB(c):
