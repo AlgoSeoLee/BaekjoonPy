@@ -1,6 +1,8 @@
 from sys import stdin
 from bisect import bisect_left
 
+"https://www.acmicpc.net/problem/17218 비밀번호 만들기 <Gold V>"
+
 def compressed_A_and_set_B(plain_A, plain_B):
     compressed_A = ''
     set_B = {}
