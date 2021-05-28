@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/17219 비밀번호 찾기 <Silver IV>"
+
 num_of_password, num_of_site = map(int, stdin.readline().split())
 
 password_book = {}
