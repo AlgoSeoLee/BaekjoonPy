@@ -1,6 +1,8 @@
 from sys import stdin
 from enum import Enum
 
+"https://www.acmicpc.net/problem/1149 RGB거리 <Silver I>"
+
 RGB = Enum("RGB", "red green blue")
 
 num_of_house = int(stdin.readline())
