@@ -1,6 +1,8 @@
 from sys import stdin
 from math import sqrt
 
+"https://www.acmicpc.net/problem/1358 하키 <Silver III>"
+
 def calc_distance_between_points(source, destination):
     sx, sy = source
     dx, dy = destination
