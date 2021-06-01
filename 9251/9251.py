@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/9251 LCS <Gold V>"
+
 def longest_common_subsequence(plain_A, plain_B):
     length_of_A = len(plain_A) + 1
     length_of_B = len(plain_B) + 1
