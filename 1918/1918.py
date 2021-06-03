@@ -37,7 +37,7 @@ def preprocessing(plain):
     pos = 0
     while pos < convert_length:
         current = convert[pos]
-        if current == '*':
+        if current == '*' or current == '/':
             left = pos - 1
             right = pos + 1
             prev = convert[left]
@@ -60,29 +60,34 @@ ALPHABET_START = ord('A')
 ALPHABET_END = ord('Z')
 
 def reverse_poland_expression(arr, arr_length):
-
     elem = ''
     ops = []
     pos = 0
-
     while pos < arr_length:
         current = arr[pos]
         ascii_code = ord(current)
         if ascii_code >= ALPHABET_START and ascii_code <= ALPHABET_END:
             elem += current
+            pos += 1
         elif current == '(':
-            start = pos + 1
-            while arr[pos] != ')':
-                pos += 1
-            end = pos + 1
+            start = pos
+            end = find_bracket_end(arr, start)
+            start += 1
             length = end - start
             elem += reverse_poland_expression(arr[start:end], length)
+            pos = end
         elif current == ')':
-            pass
+            pos += 1
+            continue
         else:
             ops.append(current)
+            pos += 1
+            continue
 
-        pos += 1
+        try:
+            elem += ops.pop()
+        except IndexError:
+            pass
 
     return elem + ''.join(reversed(ops))
 
