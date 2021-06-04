@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/9465 스티커 <Silver II>"
+
 num_of_case = int(stdin.readline())
 for _ in range(num_of_case):
     num_of_sticker_in_line = int(stdin.readline())
