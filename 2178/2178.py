@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/2178 미로 탐색 <Silver I>"
+
 def solve_maze(matrix, total_x, total_y):
     visited = [[False for _ in range(total_x)] for _ in range(total_y)]
     queue = deque([(0, 0, 1)])
