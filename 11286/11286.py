@@ -1,6 +1,8 @@
 from sys import stdin
 from heapq import heappop, heappush
 
+"https://www.acmicpc.net/problem/11286 절댓값 힙 <Silver I>"
+
 class ABSHeap:
     def __init__(self):
         self.heap = []
