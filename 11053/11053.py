@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/11053 가장 긴 증가하는 부분 수열 <Silver II>"
+
 length_of_sequence = int(stdin.readline()) + 1
 sequence = list(map(int, stdin.readline().split()))
 element = sorted(set(sequence))
