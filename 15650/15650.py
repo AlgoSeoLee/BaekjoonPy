@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/15650 N과 M (2) <Silver III>"
+
 def solve_sequence(limit, length_of_seq):
     if length_of_seq == limit:
         return [[i for i in range(limit)]]
