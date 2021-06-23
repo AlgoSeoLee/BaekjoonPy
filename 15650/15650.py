@@ -2,56 +2,20 @@ from sys import stdin
 
 "https://www.acmicpc.net/problem/15650 N과 M (2) <Silver III>"
 
-def solve_sequence(limit, length_of_seq):
-    if length_of_seq == limit:
-        return [[i for i in range(limit)]]
+def _DFS(arr, at, depth, N, M):
+    if depth == M:
+        for num in arr:
+            print(num, end=' ')
+        print()
+        return
 
-    result = []
-    for i in range(limit - length_of_seq + 1):
-        if length_of_seq == 1:
-            result.append([i])
-            continue
+    for i in range(at, N + 1):
+        arr[depth] = i
+        _DFS(arr, i + 1, depth + 1, N, M)
 
-        seq = []
-        visited = []
-        for t in range(limit):
-            current = False
-            if t < i:
-                current = True
-            visited.append(current)
+def solve_M_and_N(N, M):
+    arr = [0 for _ in range(M)]
+    _DFS(arr, 1, 0, N, M)
 
-        stack = []
-        start = i + 1
-        stack.append(([i], 1))
-        while stack:
-            sub_seq, level = stack.pop()
-            current = sub_seq[-1]
-            if visited[current]:
-                continue
-            else:
-                visited[current] = True
-
-            directions = filter(
-                lambda x: not visited[x],
-                range(limit - 1, -1, -1)
-            )
-
-            data = map(
-                lambda d: (sub_seq + [d], level + 1),
-                directions
-            )
-
-            for d in data:
-                if d[1] == length_of_seq:
-                    result.append(sorted(d[0]))
-                    continue
-                stack.append(d)
-
-    return sorted(result)
-
-N, M = map(int, stdin.readline().split())
-result = solve_sequence(N, M)
-for line in result:
-    for number in map(lambda x: x + 1, line):
-        print(number, end=' ')
-    print()
+M, N = map(int, stdin.readline().split())
+solve_M_and_N(M, N)
