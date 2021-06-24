@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/15652 N과 M (4) <Silver III>"
+
 def _DFS(arr, at, depth, N, M):
     if depth == M:
         for num in arr:
