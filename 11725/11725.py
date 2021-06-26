@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/11725 트리의 부모 찾기 <Silver II>"
+
 class Graph:
     def __init__(
         self,
