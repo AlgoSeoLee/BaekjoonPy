@@ -3,49 +3,41 @@ from sys import stdin
 plain = stdin.readline().rstrip()
 plain_length = len(plain)
 trigger = stdin.readline().rstrip()
-rev_trigger = trigger[::-1]
 trigger_length = len(trigger)
 
 current = 0
 while current < plain_length:
-    print(current)
     if plain[current] == trigger[0]:
         stack = []
-        start = current
-        while current < plain_length:
-            if plain[current] in trigger:
-                stack.append(plain[current])
-                current += 1
+        count = 0
+        same = 0
+        while current + count < plain_length:
+            position = current + count
+            stack.append(plain[position])
+            count += 1
+
+            if plain[position] == trigger[same]:
+                same += 1
+                if same == trigger_length:
+                    same = 0
+                    for _ in range(trigger_length):
+                        stack.pop()
+            elif plain[position] in trigger:
+                same = 0
+                if plain[position] == trigger[0]:
+                    same = 1
             else:
+                count -= 1
+                stack.pop()
                 break
 
-        print(stack)
+        after = len(stack) - count
+        plain_length += after
+        plain = plain[:current] + ''.join(stack) + plain[current+count:]
+    else:
+        current += 1
 
-        count = 0
-        after = ''
-        while stack:
-            elem = stack.pop()
-            print(elem, rev_trigger[count])
-            if elem == rev_trigger[count]:
-                count += 1
-                after = elem + after
-                if count == trigger_length:
-                    after = after[:len(after) - count]
-            elif count > 0:
-                count = 0
-                if rev_trigger[0] == elem:
-                    count = 1
-                after = elem + after
-            else:
-                after = elem + after
-                while stack:
-                    after = stack.pop() + after
-
-        plain_length -= current - start - len(after)
-        plain = plain[:start] + after + plain[current:]
-        print(plain)
-        current = start
-
-    current += 1
-
-print(plain)
+if plain == '':
+    print("FRULA")
+else:
+    print(plain)
