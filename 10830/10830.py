@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/10830 행렬 제곱 <Gold IV>"
+
 MOD = 1000
 def matrix_mul(size, a, b):
     c = [[0 for _ in range(size)] for _ in range(size)]
