@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/12851 숨바꼭질 2 <Gold V>"
+
 def BFS(start, target):
     visited = {}
     visited[start] = True
