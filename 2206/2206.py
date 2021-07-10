@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/2206 벽 부수고 이동하기 <Gold IV>"
+
 def calc_fastest_way(world, total_x, total_y, start_x, start_y):
     # 변수 초기화
     visited = {}
