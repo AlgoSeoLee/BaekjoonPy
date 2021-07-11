@@ -1,14 +1,19 @@
 from sys import stdin
 from collections import deque
+from itertools import chain, tee, filterfalse
 
 "https://www.acmicpc.net/problem/2206 벽 부수고 이동하기 <Gold IV>"
 
+def partition(function, iterator):
+    t1, t2 = tee(iterator)
+    return filterfalse(function, t1), filter(function, t2) 
+
 def calc_fastest_way(world, total_x, total_y, start_x, start_y):
     # 변수 초기화
-    visited = {}
-    visited[(start_y,start_x)] = 1
+    visited = [{}, {}]
+    visited[0][(start_y,start_x)] = True
     queue = deque()
-    queue.append((start_x, start_y, 1))
+    queue.append((start_x, start_y, 1, False))
     # 벽들을 저장할 변수
     walls = []
 
@@ -25,15 +30,15 @@ def calc_fastest_way(world, total_x, total_y, start_x, start_y):
     ]
 
     # BFS
-    finding_wall = True
     limit = 1000001
     result = limit
     is_wall = lambda w: world[w[1]][w[0]]
-    while finding_wall or queue:
-        if finding_wall and not queue:
-            queue.extend(walls)
-            finding_wall = False
-        x, y, level = queue.popleft()
+    is_limit_range = (
+        lambda w:
+            w[0] >= 0 and w[0] < total_x and
+            w[1] >= 0 and w[1] < total_y)
+    while queue:
+        x, y, level, is_drill = queue.popleft()
         if x == target_x and y == target_y:
             if level < result:
                 result = level
@@ -43,32 +48,37 @@ def calc_fastest_way(world, total_x, total_y, start_x, start_y):
         ways = map(lambda d: (x + d[0], y + d[1]), diff)
         # 범위 제한
         ways = filter(
-            lambda w:
-                w[0] >= 0 and w[0] < total_x and
-                w[1] >= 0 and w[1] < total_y,
+            is_limit_range,
             ways)
         # 변수 추가
         next_level = level + 1
-        ways = list(map(
+        ways = map(
             lambda w:
-                (w[0], w[1], next_level),
-            ways))
-        # 벽인지 확인, 벽이면 벽을 찾는지 확인하고 저장
-        if finding_wall:
-            walls.extend(filter(lambda w: is_wall(w), ways))
-        ways = filter(lambda w: not is_wall(w), ways)
-        # 중복 방지
-        ways = filter(
-            lambda w: not visited.get((w[1],w[0])) or
-                next_level < visited.get((w[1],w[0])),
+                (w[0], w[1], next_level, is_drill or world[w[1]][w[0]]),
             ways)
+        # 벽인지 확인
+        ways, walls = partition(is_wall, ways)
+        ways = filter(
+            lambda w: not visited[0].get((w[1],w[0])),
+            ways) 
+
+        if not is_drill:
+            # 중복 방지
+            walls = filter(
+                lambda w: not visited[1].get((w[1],w[0])),
+                walls)
+
+            ways = chain(ways, walls)
 
         for w in ways:
             wx = w[0]
             wy = w[1]
+            wdrilled = w[3]
             # 방문 등록
-            visited[(w[1],w[0])] = next_level
-            queue.append(w)
+            target = 1 if wdrilled else 0
+            if not visited[target].get((w[1],w[0])):
+                visited[target][(w[1],w[0])] = True
+                queue.append(w)
 
     if result == limit:
         return -1
