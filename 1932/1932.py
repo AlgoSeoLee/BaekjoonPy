@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1932 정수 삼각형 <Silver I>"
+
 num_of_line = int(stdin.readline())
 triangle = [
     [int(v) for v in stdin.readline().split()]
