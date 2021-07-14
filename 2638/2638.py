@@ -3,6 +3,8 @@ from enum import Enum
 from collections import deque
 from itertools import tee
 
+"https://www.acmicpc.net/problem/2638 치즈 <Gold IV>"
+
 State = Enum("State", "Lock Open Cheese")
 
 def input_grid(num_of_row):
