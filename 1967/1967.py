@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1967 트리의 지름 <Gold IV>"
+
 class Graph:
     def __init__(
         self,
