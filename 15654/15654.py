@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/15654 N과 M (5) <Silver III>"
+
 def _DFS(cond, arr, at, depth, N, M):
     if depth == M:
         set_of_arr = sorted(set(arr))
