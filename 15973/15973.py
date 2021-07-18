@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/15973 두 박스 <Silver I>"
+
 # referenced code by https://www.acmicpc.net/board/view/31149
 # also translated js to python
 
