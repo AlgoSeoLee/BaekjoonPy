@@ -1,5 +1,5 @@
-from sys import stdin
-from collections import deque
+from sys import stdin, maxsize
+from heapq import heappop, heappush
 
 "https://www.acmicpc.net/problem/1753 최단경로 <Gold V>"
 
@@ -47,25 +47,28 @@ class WeightedGraph(Graph):
 def dijkstra(graph, start):
     vertex_list = graph.get_vertex_list()
     weight_list = graph.get_weight_list()
-    queue = deque()
     num_of_vertex = graph.get_num_of_vertex()
-    distance = [None for _ in range(num_of_vertex)]
 
-    queue.append(start)
-    distance[start] = 0
+    queue = []
+    distances = [maxsize for _ in range(num_of_vertex)]
+
+    queue.append((0, start))
+    distances[start] = 0
     
     while queue:
-        cur = queue.popleft()
-        current_distance = distance[cur]
+        cost, cur = heappop(queue)
+        current_distance = distances[cur]
+        if cost > current_distance:
+            continue
 
         for next, weight in zip(vertex_list[cur], weight_list[cur]):
-            next_distance = distance[next]
+            next_distance = distances[next]
             predict_distance = current_distance + weight
-            if not next_distance or predict_distance < next_distance:
-                distance[next] = predict_distance
-                queue.append(next)
+            if predict_distance < next_distance:
+                distances[next] = predict_distance
+                heappush(queue,(predict_distance, next))
 
-    return distance
+    return distances
 
 num_of_vertex, num_of_line = map(int,stdin.readline().split())
 graph = WeightedGraph(num_of_vertex, False)
@@ -78,7 +81,7 @@ for _ in range(num_of_line):
 result = dijkstra(graph, start)
 
 for d in result:
-    if d is None:
+    if d == maxsize:
         d = "INF"
     print(d)
 
