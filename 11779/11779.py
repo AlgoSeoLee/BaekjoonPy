@@ -1,6 +1,8 @@
 from sys import stdin, maxsize
 from heapq import heappop, heappush
 
+"https://www.acmicpc.net/problem/11779 최소비용 구하기 2 <Gold III>"
+
 class Graph:
     def __init__(
         self,
