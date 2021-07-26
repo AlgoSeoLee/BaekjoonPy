@@ -1,7 +1,5 @@
-from sys import stdin
+from sys import stdin, maxsize
 from heapq import heappop, heappush
-
-maxsize = 160000001
 
 class Graph:
     def __init__(
@@ -30,16 +28,26 @@ class Graph:
         return self.num_of_vertex
 
 class WeightedGraph(Graph):
-    def __init__(self,num_of_vertex,is_zero_index=False):
-        super().__init__(num_of_vertex, False, is_zero_index)
+    def __init__(
+        self,
+        num_of_vertex,
+        is_bidirection=False,
+        is_zero_index=False):
+        super().__init__(
+            num_of_vertex, is_bidirection, is_zero_index
+        )
         self.weight = [[] for _ in range(num_of_vertex)]
 
     def add_line(self, src, dest, cost):
         if not self.is_zero_index:
             src -= 1
             dest -= 1
+
         self.vertex[src].append(dest)
         self.weight[src].append(cost)
+        if self.is_bidirection:
+            self.vertex[dest].append(src)
+            self.weight[dest].append(cost)
 
     def get_weight_list(self):
         return self.weight
@@ -71,7 +79,7 @@ def dijkstra(graph, start):
     return distances
 
 num_of_vertex, num_of_line = map(int,stdin.readline().split())
-graph = WeightedGraph(num_of_vertex, False)
+graph = WeightedGraph(num_of_vertex, True, False)
 
 for _ in range(num_of_line):
     src, dest, cost = map(int, stdin.readline().split())
@@ -88,7 +96,7 @@ dist1 = general[path1] + waypoint1[path2] + waypoint2[target]
 dist2 = general[path2] + waypoint2[path1] + waypoint1[target]
 
 result = min(dist1, dist2)
-if result == maxsize:
+if result >= maxsize:
     result = -1
 
 print(result)
