@@ -28,8 +28,16 @@ class Graph:
         return self.num_of_vertex
 
 class WeightedGraph(Graph):
-    def __init__(self,num_of_vertex,is_zero_index=False):
-        super().__init__(num_of_vertex, False, is_zero_index)
+    def __init__(
+        self,
+        num_of_vertex,
+        is_bidirection=False,
+        is_zero_index=False):
+        super().__init__(
+            num_of_vertex,
+            is_bidirection,
+            is_zero_index
+        )
         self.weight = [[] for _ in range(num_of_vertex)]
 
     def add_line(self, src, dest, cost):
@@ -38,6 +46,9 @@ class WeightedGraph(Graph):
             dest -= 1
         self.vertex[src].append(dest)
         self.weight[src].append(cost)
+        if self.is_bidirection:
+            self.vertex[dest].append(src)
+            self.weight[dest].append(cost)
 
     def get_weight_list(self):
         return self.weight
