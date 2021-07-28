@@ -1,6 +1,8 @@
 from sys import stdin, maxsize
 from heapq import heappop, heappush
 
+"https://www.acmicpc.net/problem/1238 파티 <Gold III>"
+
 class Graph:
     def __init__(
         self,
