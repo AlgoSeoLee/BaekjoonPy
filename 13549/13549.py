@@ -1,6 +1,8 @@
 from sys import stdin
 from heapq import heappop, heappush
 
+"https://www.acmicpc.net/problem/13549 숨바꼭질 3 <Gold V>"
+
 MAXIMUM = 100000
 MINIMUM = 0
 
