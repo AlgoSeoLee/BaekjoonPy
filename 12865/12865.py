@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/12865 평범한 배낭 <Gold V>"
+
 def solve_knapsack(items, num_of_item, weight_limit):
     dp = [
         [0 for _ in range(0, weight_limit+1)]
