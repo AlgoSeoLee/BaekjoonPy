@@ -1,5 +1,7 @@
 from sys import stdin, maxsize
 
+"https://www.acmicpc.net/problem/1865 웜홀 <Gold IV>"
+
 def bellman_ford_minus_cycle(graph, num_of_vertex, start):
     distances = [maxsize for _ in range(num_of_vertex)]
     snapshot = []
