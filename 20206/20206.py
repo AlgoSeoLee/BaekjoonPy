@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/20206 푸앙이가 길을 건너간 이유 <Silver I>"
+
 input_integers = lambda: map(int, stdin.readline().split())
 
 translate_equation = lambda a, b: -(a / b)
