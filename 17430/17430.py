@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/17430 가로등 <Silver I>"
+
 input_integer = lambda: int(stdin.readline())
 input_coordinate = lambda: tuple(map(int, stdin.readline().split()))
 
