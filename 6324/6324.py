@@ -1,6 +1,8 @@
 from sys import stdin
 import re
 
+"https://www.acmicpc.net/problem/6324 URLs <Silver I>"
+
 url_scheme = re.compile(r"(\w+)://([\w\d\.\_-]+)(:\d+)?(/.+)?")
 DEFAULT = " <default>"
 
