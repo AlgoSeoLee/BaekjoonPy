@@ -1,43 +1,29 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/9935 문자열 폭발 <Gold IV>"
+
 plain = stdin.readline().rstrip()
-plain_length = len(plain)
-trigger = stdin.readline().rstrip()
-trigger_length = len(trigger)
+bomb = stdin.readline().rstrip()
+bomb_length = len(bomb)
 
-current = 0
-while current < plain_length:
-    if plain[current] == trigger[0]:
-        stack = []
-        count = 0
-        same = 0
-        while current + count < plain_length:
-            position = current + count
-            stack.append(plain[position])
-            count += 1
-
-            if plain[position] == trigger[same]:
-                same += 1
-                if same == trigger_length:
-                    same = 0
-                    for _ in range(trigger_length):
-                        stack.pop()
-            elif plain[position] in trigger:
-                same = 0
-                if plain[position] == trigger[0]:
-                    same = 1
-            else:
-                count -= 1
-                stack.pop()
+result = [' ']
+result_idx = 0
+for c in plain:
+    result[result_idx] = c
+    result.append(' ')
+    result_idx += 1
+    if result[result_idx - 1] == bomb[bomb_length-1]:
+        explode = True
+        for j in range(bomb_length):
+            if result[result_idx-1-j] != bomb[bomb_length-1-j]:
+                explode = False
                 break
 
-        after = len(stack) - count
-        plain_length += after
-        plain = plain[:current] + ''.join(stack) + plain[current+count:]
-    else:
-        current += 1
+        if explode:
+            result_idx = result_idx - bomb_length
 
-if plain == '':
+result = ''.join(result[0:result_idx])
+if result == '':
     print("FRULA")
 else:
-    print(plain)
+    print(result)
