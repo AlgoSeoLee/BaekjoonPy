@@ -1,5 +1,7 @@
 from sys import stdin, exit
 
+"https://www.acmicpc.net/problem/2156 포도주 시식 <Silver I>"
+
 num_of_wine = int(stdin.readline())
 
 wines = []
