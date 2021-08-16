@@ -2,6 +2,8 @@ from sys import stdin
 from math import log
 from collections import deque
 
+"https://www.acmicpc.net/problem/2448 별 찍기 - 11 <Gold IV>"
+
 TRIFORCE = [
     "  *  ",
     " * * ",
