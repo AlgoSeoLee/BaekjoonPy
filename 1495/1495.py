@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1495 기타리스트 <Silver I>"
+
 read_integers = lambda: map(int, stdin.readline().split())
 
 num_of_song, start_volume, maximum_volume = read_integers()

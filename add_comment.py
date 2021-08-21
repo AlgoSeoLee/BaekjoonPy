@@ -5,7 +5,7 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 NAME_RULE = r"(\d+)/\d+.py"
-CLIENT_HEADER = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0'}
+CLIENT_HEADER = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36'}
 
 def search_solved_ac(problem):
     req = urllib.request.Request(
@@ -17,7 +17,9 @@ def search_solved_ac(problem):
 def parse_solved_ac(problem):
     plain = search_solved_ac(problem)
     soup = BeautifulSoup(plain)
-    rows = soup.find_all("div", {"class": "sticky-table-row"})
+    rows = soup.select(
+        '#__next > div.contents > div:nth-child(4) > div:nth-child(2) > div > div.sticky-table > div > div'
+    )
     for r in rows:
         cells = r.find_all("div", {"class": "sticky-table-cell"})
         try:
