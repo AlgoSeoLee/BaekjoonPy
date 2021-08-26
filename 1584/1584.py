@@ -1,7 +1,7 @@
 from sys import stdin, maxsize
 from enum import Enum
 from collections import deque
-import itertools
+from itertools import tee, chain
 
 read_int = lambda: int(stdin.readline())
 read_integers = lambda: map(int, stdin.readline().split())
@@ -21,7 +21,6 @@ SIZE = 501
 world = [[State.safe for _ in range(SIZE)] for _ in range(SIZE)]
 
 def world_insert_zones(zones, state):
-    print(zones)
     for left_top_x, left_top_y , right_bottom_x, right_bottom_y in zones:
         for x in range(left_top_x, right_bottom_x + 1):
             for y in range(left_top_y, right_bottom_y + 1):
@@ -48,16 +47,32 @@ def world_calc_minimum_damage_for_escape():
         ways = map(lambda d: (cur_x + d[0], cur_y + d[1]), DIRECTION)
         ways = filter(lambda w: w[0] >= 0 and w[0] < SIZE, ways)
         ways = filter(lambda w: w[1] >= 0 and w[1] < SIZE, ways)
-        ways = map(
-            lambda w: (w[0], w[1], cur_loss_life + world[w[1]][w[0]]),
-            ways
+        ways = map(lambda w: (w[0], w[1], cur_loss_life), ways)
+        safe, danger = tee(ways)
+
+        safe = filter(lambda w: world[w[1]][w[0]] == State.safe, safe)
+        danger = filter(
+            lambda w: world[w[1]][w[0]] == State.danger, danger
         )
+        danger = map(lambda w: (w[0], w[1], w[2] + 1), danger)
+        ways = chain(safe, danger)
+
         ways = filter(
             lambda w:
                 visited[w[1]][w[0]] == None or
-                visited[w[1]][w[0]] >= w[2],
+                visited[w[1]][w[0]] > w[2],
             ways
         )
+
+        store_queue, store_visited = tee(ways)
+        queue.extendleft(store_queue)
+        for w in store_visited:
+            visited[w[1]][w[0]] = w[2]
+
+    result = visited[500][500]
+    if result == None:
+        return -1
+    return result
 
 num_of_danger = read_int()
 danger_zones = input_zones(num_of_danger)
@@ -66,4 +81,6 @@ world_insert_zones(danger_zones, State.danger)
 num_of_death = read_int()
 death_zones = input_zones(num_of_death)
 world_insert_zones(death_zones, State.death)
+
+print(world_calc_minimum_damage_for_escape())
 
