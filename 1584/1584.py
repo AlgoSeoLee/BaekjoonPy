@@ -1,7 +1,7 @@
 from sys import stdin, maxsize
 from enum import Enum
-from collections import deque
 from itertools import tee, chain
+from heapq import heappop, heappush
 
 read_int = lambda: int(stdin.readline())
 read_integers = lambda: map(int, stdin.readline().split())
@@ -27,10 +27,10 @@ def world_insert_zones(zones, state):
                 world[y][x] = state
 
 def world_calc_minimum_damage_for_escape():
-    queue = deque()
+    queue = []
     visited = [[None for _ in range(SIZE)] for _ in range(SIZE)]
 
-    queue.appendleft((0, 0, 0))
+    queue.append((0, 0, 0))
     visited[0][0] = 0
 
     DIRECTION = [
@@ -41,38 +41,44 @@ def world_calc_minimum_damage_for_escape():
     ]
 
     while queue:
-        current = queue.pop()
-        cur_x, cur_y, cur_loss_life = current
+        current = heappop(queue)
+        cur_loss_life, cur_x, cur_y = current
 
-        ways = map(lambda d: (cur_x + d[0], cur_y + d[1]), DIRECTION)
-        ways = filter(lambda w: w[0] >= 0 and w[0] < SIZE, ways)
-        ways = filter(lambda w: w[1] >= 0 and w[1] < SIZE, ways)
-        ways = map(lambda w: (w[0], w[1], cur_loss_life), ways)
+        if cur_x == 500 and cur_y == 500:
+            return cur_loss_life
+
+        ways = map(
+            lambda d: (cur_loss_life, cur_x + d[0], cur_y + d[1]), DIRECTION
+        )
+        ways = filter(
+            lambda w:
+                w[1] >= 0 and w[1] < SIZE and
+                w[2] >= 0 and w[2] < SIZE,
+            ways
+        )
         safe, danger = tee(ways)
 
-        safe = filter(lambda w: world[w[1]][w[0]] == State.safe, safe)
-        danger = filter(
-            lambda w: world[w[1]][w[0]] == State.danger, danger
+        safe = filter(
+            lambda w: world[w[2]][w[1]] == State.safe, safe
         )
-        danger = map(lambda w: (w[0], w[1], w[2] + 1), danger)
+        danger = filter(
+            lambda w: world[w[2]][w[1]] == State.danger, danger
+        )
+        danger = map(lambda w: (w[0] + 1, w[1], w[2]), danger)
         ways = chain(safe, danger)
 
         ways = filter(
             lambda w:
-                visited[w[1]][w[0]] == None or
-                visited[w[1]][w[0]] > w[2],
+                visited[w[2]][w[1]] == None or
+                visited[w[2]][w[1]] > w[0],
             ways
         )
 
-        store_queue, store_visited = tee(ways)
-        queue.extendleft(store_queue)
-        for w in store_visited:
-            visited[w[1]][w[0]] = w[2]
+        for w in ways:
+            visited[w[2]][w[1]] = w[0]
+            heappush(queue, w)
 
-    result = visited[500][500]
-    if result == None:
-        return -1
-    return result
+    return -1
 
 num_of_danger = read_int()
 danger_zones = input_zones(num_of_danger)
