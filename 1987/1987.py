@@ -1,5 +1,7 @@
 from sys import stdin, maxsize
 
+"https://www.acmicpc.net/problem/1987 알파벳 <Gold IV>"
+
 def input_board(num_of_row):
     return [
         stdin.readline().rstrip()
