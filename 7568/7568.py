@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/7568 덩치 <Silver V>"
+
 read_integers = lambda: map(int, stdin.readline().split())
 
 num_of_people = int(stdin.readline())
