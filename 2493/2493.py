@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/2493 탑 <Gold V>"
+
 num_of_tower = int(stdin.readline())
 towers = [int(v) for v in stdin.readline().split()]
 
