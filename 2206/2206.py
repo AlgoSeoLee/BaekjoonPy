@@ -1,98 +1,82 @@
-from sys import stdin
-from collections import deque
-from itertools import chain, tee, filterfalse
+from sys import stdin, maxsize
+from itertools import tee, chain
+from heapq import heappop, heappush
 
-"https://www.acmicpc.net/problem/2206 벽 부수고 이동하기 <Gold IV>"
-
-def partition(function, iterator):
-    t1, t2 = tee(iterator)
-    return filterfalse(function, t1), filter(function, t2) 
-
-def calc_fastest_way(world, total_x, total_y, start_x, start_y):
-    # 변수 초기화
-    visited = [{}, {}]
-    visited[0][(start_y,start_x)] = True
-    queue = deque()
-    queue.append((start_x, start_y, 1, False))
-    # 벽들을 저장할 변수
-    walls = []
-
-    # 목표 지점은 해당 지도의 x,y 최대값
-    target_x = total_x - 1
-    target_y = total_y - 1
-
-    # 검사범위: 상하좌우
-    diff = [
-        (1, 0),
-        (0, 1),
-        (0, -1),
-        (-1, 0),
+def input_world(num_of_row):
+    return [
+        [v == '1' for v in stdin.readline().rstrip()]
+        for _ in range(num_of_row)
     ]
 
-    # BFS
-    limit = 1000001
-    result = limit
-    is_wall = lambda w: world[w[1]][w[0]]
-    is_limit_range = (
+DIRECTION = [
+    (0, 1),
+    (1, 0),
+    (-1, 0),
+    (0, -1)
+]
+
+def finding_ways_walls(world, num_of_row, num_of_column, is_wall, x, y):
+    ways = map(lambda d: (d[0] + x, d[1] + y), DIRECTION)
+    ways = filter(
         lambda w:
-            w[0] >= 0 and w[0] < total_x and
-            w[1] >= 0 and w[1] < total_y)
+            w[0] >= 0 and w[0] < num_of_column and
+            w[1] >= 0 and w[1] < num_of_row,
+        ways
+    )
+
+    ways, walls = tee(ways)
+
+    if not is_wall:
+        walls = filter(lambda w: world[w[1]][w[0]], walls)
+    else:
+        walls = None
+
+    ways = filter(lambda w: not world[w[1]][w[0]], ways)
+    return ways, walls
+
+def calc_fastest_time(world, num_of_row, num_of_column):
+    queue = []
+    visited = [
+        [
+            [maxsize for _ in range(num_of_column)]
+            for _ in range(num_of_row)
+        ]
+        for _ in range(2)
+    ]
+
+    queue.append((1, 0, 0, False))
+    visited[0][0][0] = 0
     while queue:
-        x, y, level, is_drill = queue.popleft()
-        if x == target_x and y == target_y:
-            if level < result:
-                result = level
-            continue
+        time, x, y, is_drilled = heappop(queue)
+        next_time = time + 1
 
-        # 실제 좌표값으로 변환
-        ways = map(lambda d: (x + d[0], y + d[1]), diff)
-        # 범위 제한
-        ways = filter(
-            is_limit_range,
-            ways)
-        # 변수 추가
-        next_level = level + 1
-        ways = map(
+        ways, walls = finding_ways_walls(
+            world, num_of_row, num_of_column, is_drilled, x, y
+        )
+
+        is_visited = (
             lambda w:
-                (w[0], w[1], next_level, is_drill or world[w[1]][w[0]]),
-            ways)
-        # 벽인지 확인
-        ways, walls = partition(is_wall, ways)
-        ways = filter(
-            lambda w: not visited[0].get((w[1],w[0])),
-            ways) 
+                w[0] < visited[0][w[2]][w[1]] and
+                (not w[3] or w[0] < visited[1][w[2]][w[1]])
+        )
 
-        if not is_drill:
-            # 중복 방지
-            walls = filter(
-                lambda w: not visited[1].get((w[1],w[0])),
-                walls)
+        ways = map(lambda w: (next_time, w[0], w[1], is_drilled), ways)
 
+        if not is_drilled:
+            walls = map(lambda w: (next_time, w[0], w[1], True), walls)
             ways = chain(ways, walls)
 
+        ways = filter(is_visited, ways)
+
         for w in ways:
-            wx = w[0]
-            wy = w[1]
-            wdrilled = w[3]
-            # 방문 등록
-            target = 1 if wdrilled else 0
-            if not visited[target].get((w[1],w[0])):
-                visited[target][(w[1],w[0])] = True
-                queue.append(w)
+            if w[1] == num_of_column - 1 and w[2] == num_of_row - 1:
+                return w[0]
+            visited[1 if w[3] else 0][w[2]][w[1]] = w[0]
+            heappush(queue, w)
 
-    if result == limit:
-        return -1
-    return result
+    return -1
 
-def input_world(total_y):
-    world = [
-        [v == '1' for v in stdin.readline().rstrip()]
-        for _ in range(total_y)
-    ]
-    return world
+num_of_row, num_of_column = map(int, stdin.readline().split())
+world = input_world(num_of_row)
 
-total_y, total_x = map(int, stdin.readline().split())
-world = input_world(total_y)
-
-print(calc_fastest_way(world, total_x, total_y, 0, 0))
-
+print(calc_fastest_time(world, num_of_row, num_of_column))
