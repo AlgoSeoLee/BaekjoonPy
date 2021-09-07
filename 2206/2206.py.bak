@@ -4,6 +4,8 @@ from itertools import chain, tee, filterfalse
 
 "https://www.acmicpc.net/problem/2206 벽 부수고 이동하기 <Gold IV>"
 
+"https://www.acmicpc.net/problem/2206 벽 부수고 이동하기 <Gold IV>"
+
 def partition(function, iterator):
     t1, t2 = tee(iterator)
     return filterfalse(function, t1), filter(function, t2) 
