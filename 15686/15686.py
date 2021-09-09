@@ -1,6 +1,8 @@
 from sys import stdin
 from itertools import chain, combinations
 
+"https://www.acmicpc.net/problem/15686 치킨 배달 <Gold V>"
+
 size, num_of_survivor = map(int, stdin.readline().split())
 
 houses = []
