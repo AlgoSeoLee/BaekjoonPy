@@ -2,58 +2,48 @@ from sys import stdin, maxsize
 
 "https://www.acmicpc.net/problem/1865 웜홀 <Gold IV>"
 
-def bellman_ford_minus_cycle(graph, num_of_vertex, start):
-    distances = [maxsize for _ in range(num_of_vertex)]
-    snapshot = []
+class Edge:
+    def __init__(self, src, dst, weight):
+        self.source = src - 1
+        self.destination = dst - 1
+        self.weight = weight
 
-    for i in range(2):
-        if i == 1:
-            snapshot.extend(distances)
-        for v in range(num_of_vertex):
-            for t in range(num_of_vertex):
-                if graph[v][t] != maxsize:
-                    distances[t] = min(
-                        distances[t], distances[v] + graph[v][t]
-                    )
+def BellmanFord(edges, num_of_edge, num_of_node, source):
+    distance = [maxsize if i != source else 0 for i in range(num_of_node)]
 
-    validate = True
-    if distances[0] != snapshot[0]:
-        validate = False
-    
-    return validate
+    for _ in range(num_of_node):
+        for e in edges:
+            relaxing = distance[e.source] + e.weight
+            if distance[e.destination] > relaxing:
+                distance[e.destination] = relaxing
 
-def graph_init(num_of_vertex):
-    graph = [
-        [maxsize for _ in range(num_of_vertex)]
-        for _ in range(num_of_vertex)
-    ]
+    for e in edges:
+        if distance[e.destination] > distance[e.source] + e.weight:
+            return True
 
-    return graph
+    return False
 
-def graph_add_line(graph, src, dst, cost):
-    graph[src][dst] = cost
+def input_integers():
+    return map(int, stdin.readline().split())
 
-def solve_wormhole(num_of_area, num_of_road, num_of_wormhole):
-    graph = graph_init(num_of_area)
-    input_line = lambda: map(lambda a:int(a)-1, stdin.readline().split())
+def input_edges(num_of_edge, is_negative=False):
+    edges = []
+    for _ in range(num_of_edge):
+        src, dst, weight = input_integers()
+        if is_negative:
+            weight = -weight
+        edges.append(Edge(src, dst, weight))
 
-    for i in range(num_of_road + num_of_wormhole):
-        src, dst, cost = input_line()
-        cost += 1
-        if i >= num_of_road:
-            cost = -cost
-
-        graph_add_line(graph, src, dst, cost)
-
-    result = bellman_ford_minus_cycle(graph, num_of_area, 0)
-    if not result:
-        print("YES")
-    else:
-        print("NO")
+    return edges
 
 num_of_case = int(stdin.readline())
 for _ in range(num_of_case):
-    line = map(int, stdin.readline().split())
-    num_of_area, num_of_road, num_of_wormhole = line
-    solve_wormhole(num_of_area, num_of_road, num_of_wormhole)
+    num_of_node, num_of_road, num_of_wormhole = input_integers()
+    edges = []
 
+    edges.extend(input_edges(num_of_road))
+    edges.extend(input_edges(num_of_wormhole, True))
+    if BellmanFord(edges, num_of_road + num_of_wormhole, num_of_node, 0):
+        print("YES")
+    else:
+        print("NO")
