@@ -8,48 +8,47 @@ def input_board(num_of_row):
         for _ in range(num_of_row)
     ]
 
-def solve_alphabet(board, num_of_row, num_of_column):
-    stack = []
-    visited = [
-        [-1 for _ in range(num_of_column)]
-        for _ in range(num_of_row)
-    ]
+DIRECTION = [
+    (1, 0),
+    (0, 1),
+    (-1, 0),
+    (0, -1)
+]
 
-    DIRECTION = [
-        (1, 0),
-        (0, 1),
-        (-1, 0),
-        (0, -1)
-    ]
+def _dfs(board, num_of_row, num_of_column, row, column, level, visited):
+    level += 1
+    alphabetIndex = ord(board[row][column]) - 65
+    if visited[alphabetIndex]:
+        return level - 1
 
-    result = -1
-    stack.append((0, 0, set(board[0][0])))
-    visited[0][0] = 0
-    while stack:
-        x, y, path = stack.pop()
-        level = len(path) + 1
+    ways = map(lambda d: (d[0] + column, d[1] + row), DIRECTION)
+    ways = filter(
+        lambda w:
+            w[0] >= 0 and w[0] < num_of_column and
+            w[1] >= 0 and w[1] < num_of_row,
+        ways
+    )
 
-        ways = map(lambda d: (x + d[0], y + d[1]), DIRECTION)
-        ways = filter(
-            lambda w:
-                w[0] >= 0 and w[0] < num_of_column and
-                w[1] >= 0 and w[1] < num_of_row,
+    visited[alphabetIndex] = True
+
+    result = max(
+        map(
+            lambda w: _dfs(
+                board, num_of_row, num_of_column,
+                w[1], w[0], level, visited
+            ),
             ways
         )
-        ways = filter(lambda w: not board[w[1]][w[0]] in path, ways)
-        ways = map(
-            lambda w: (w[0], w[1], path.union(board[w[1]][w[0]])),
-            ways
-        )
-        ways = filter(lambda w: level >= visited[w[1]][w[0]], ways)
+    )
 
-        for w in ways:
-            if level >= result:
-                result = level
-            stack.append(w)
-            visited[w[1]][w[0]] = level
+    visited[alphabetIndex] = False
 
     return result
+
+def solve_alphabet(board, num_of_row, num_of_column):
+    visited = [False for _ in range(26)]
+
+    return _dfs(board, num_of_row, num_of_column, 0, 0, 0, visited)
 
 num_of_row, num_of_column = map(int, stdin.readline().split())
 board = input_board(num_of_row)
