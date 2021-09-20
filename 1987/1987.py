@@ -15,32 +15,28 @@ DIRECTION = [
     (0, -1)
 ]
 
+def calcAlphabetIdx(char):
+    return ord(char) - 65
+
 def _dfs(board, num_of_row, num_of_column, row, column, level, visited):
-    level += 1
-    alphabetIndex = ord(board[row][column]) - 65
-    if visited[alphabetIndex]:
-        return level - 1
-
-    ways = map(lambda d: (d[0] + column, d[1] + row), DIRECTION)
-    ways = filter(
-        lambda w:
-            w[0] >= 0 and w[0] < num_of_column and
-            w[1] >= 0 and w[1] < num_of_row,
-        ways
-    )
-
+    alphabetIndex = calcAlphabetIdx(board[row][column])
     visited[alphabetIndex] = True
 
-    result = max(
-        map(
-            lambda w: _dfs(
-                board, num_of_row, num_of_column,
-                w[1], w[0], level, visited
-            ),
-            ways
+    result = level
+    for d in DIRECTION:
+        way = (column + d[0], row + d[1])
+        cond = (
+            way[0] >= 0 and way[0] < num_of_column and
+            way[1] >= 0 and way[1] < num_of_row and
+            not visited[calcAlphabetIdx(board[way[1]][way[0]])]
         )
-    )
-
+        if cond:
+            explore = _dfs(
+                board, num_of_row, num_of_column,
+                way[1], way[0], level + 1, visited
+            )
+            result = explore if explore > result else result
+    
     visited[alphabetIndex] = False
 
     return result
@@ -48,7 +44,7 @@ def _dfs(board, num_of_row, num_of_column, row, column, level, visited):
 def solve_alphabet(board, num_of_row, num_of_column):
     visited = [False for _ in range(26)]
 
-    return _dfs(board, num_of_row, num_of_column, 0, 0, 0, visited)
+    return _dfs(board, num_of_row, num_of_column, 0, 0, 1, visited)
 
 num_of_row, num_of_column = map(int, stdin.readline().split())
 board = input_board(num_of_row)
