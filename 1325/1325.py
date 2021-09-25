@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/1325 효율적인 해킹 <Silver II>"
+
 class Graph:
     def __init__(
         self,
