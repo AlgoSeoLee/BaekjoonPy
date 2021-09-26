@@ -1,7 +1,7 @@
 from sys import stdin
 import re
-"https://www.acmicpc.net/problem/3865 학회원 <Gold IV>"
 
+"https://www.acmicpc.net/problem/3865 학회원 <Gold IV>"
 
 SPLIT = re.compile(r"[:,]")
 
@@ -21,16 +21,26 @@ while True:
 
         if len(academies) == 0:
             target = academy_name
-        academies[academy_name] = set(academy)
+        academies[academy_name] = academy
 
     result = set()
-    queue = academies[target]
-    while len(queue) != 0:
+    visited = set()
+
+    queue = set(academies[target])
+    visited.add(target)
+
+    while queue:
         name = queue.pop()
-        try:
-            next_academy = academies[name]
-            queue = queue.union(next_academy)
-        except KeyError:
+        next_academy = academies.get(name)
+        if next_academy:
+            next_academy = filter(
+                lambda a: not a in visited,
+                next_academy
+            )
+            for n in next_academy:
+                queue.add(n)
+                visited.add(n)
+        else:
             result.add(name)
 
     print(len(result))
