@@ -1,5 +1,8 @@
-from sys import stdin
+from sys import stdin, setrecursionlimit
 
+"https://www.acmicpc.net/problem/1520 내리막 길 <Gold IV>"
+
+setrecursionlimit(10 ** 4)
 read_integers = lambda: map(int, stdin.readline().split())
 
 def input_matrix(num_of_row):
@@ -20,9 +23,12 @@ def _DFS(matrix, visited, num_of_row, num_of_column, row, column):
     is_visited = lambda r, c: visited[r][c]
 
     condition = (row == num_of_row - 1 and column == num_of_column - 1)
-    condition = condition or is_visited(row,column)
     if condition:
         return 1
+    else:
+        target_way = is_visited(row, column)
+        if target_way != 0:
+            return target_way
 
     height_when_entered = get_height(row, column)
 
@@ -45,11 +51,15 @@ def _DFS(matrix, visited, num_of_row, num_of_column, row, column):
     for w in ways:
         h, r, c = w
         if h < height_when_entered:
-            print(w)
             acc += _DFS(matrix, visited, num_of_row, num_of_column, r, c)
         else:
             break
-    visited[row][column] = acc
+
+    if acc != 0:
+        visited[row][column] = acc
+    else:
+        visited[row][column] = -1
+
     return acc
 
 def solve_find_downhill_ways(num_of_row, num_of_column, matrix):
