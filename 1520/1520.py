@@ -22,13 +22,12 @@ def _DFS(matrix, visited, num_of_row, num_of_column, row, column):
     get_height = lambda r, c: matrix[r][c]
     is_visited = lambda r, c: visited[r][c]
 
-    condition = (row == num_of_row - 1 and column == num_of_column - 1)
-    if condition:
+    if (row == num_of_row - 1 and column == num_of_column - 1):
         return 1
-    else:
-        target_way = is_visited(row, column)
-        if target_way != 0:
-            return target_way
+
+    target_way = is_visited(row, column)
+    if target_way != 0:
+        return target_way
 
     height_when_entered = get_height(row, column)
 
@@ -48,8 +47,7 @@ def _DFS(matrix, visited, num_of_row, num_of_column, row, column):
 
     visited[row][column] = -1
     acc = 0
-    for w in ways:
-        h, r, c = w
+    for h, r, c in ways:
         if h < height_when_entered:
             acc += _DFS(matrix, visited, num_of_row, num_of_column, r, c)
         else:
@@ -67,7 +65,6 @@ def solve_find_downhill_ways(num_of_row, num_of_column, matrix):
         [0 for _ in range(num_of_column)]
         for _ in range(num_of_row)
     ]
-    visited[0][0] = 0
     result = _DFS(matrix, visited, num_of_row, num_of_column, 0, 0)
     return result
 
