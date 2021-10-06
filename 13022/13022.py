@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/13022 늑대와 올바른 단어 <Silver I>"
+
 template = "wolf"
 template_len = len(template)
 
