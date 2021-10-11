@@ -12,7 +12,6 @@ threshold = 0
 duplicate = 0
 is_verify = '1'
 for c in word:
-    print(c, template[state], threshold, duplicate)
     if state == 0 and c == 'w':
         duplicate += 1
     elif state == 0 and duplicate > 0 and c == 'o':
