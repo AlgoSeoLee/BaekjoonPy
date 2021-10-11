@@ -1,6 +1,8 @@
 from sys import stdin
 from heapq import heappop, heappush
 
+"https://www.acmicpc.net/problem/1715 카드 정렬하기 <Gold IV>"
+
 read_integer = lambda: int(stdin.readline())
 
 num_of_deck = read_integer()
