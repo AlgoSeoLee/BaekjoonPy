@@ -1,5 +1,7 @@
 from sys import stdin, maxsize
 
+"https://www.acmicpc.net/problem/12852 1로 만들기 2 <Silver I>"
+
 def solve_to_1(target):
     operations = [
         lambda x: x // 2 if x % 2 == 0 else None,
