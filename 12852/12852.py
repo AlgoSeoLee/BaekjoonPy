@@ -3,45 +3,41 @@ from sys import stdin, maxsize
 "https://www.acmicpc.net/problem/12852 1로 만들기 2 <Silver I>"
 
 def solve_to_1(target):
-    operations = [
-        lambda x: x // 2 if x % 2 == 0 else None,
-        lambda x: x - 1,
-        lambda x: x // 3 if x % 3 == 0 else None,
-    ]
+    dp = [0, 1, 1]
+    for cur in range(4, target + 1):
+        selection = []
+        if cur % 2 == 0:
+            selection.append(dp[cur // 2 - 1])
+        if cur % 3 == 0:
+            selection.append(dp[cur // 3 - 1])
+        selection.append(dp[cur - 2])
 
-    stack = []
-    visited = {}
+        dp.append(min(selection) + 1)
 
-    stack.append((1, target, set([target])))
-    visited[target] = 1
+    backtrack = [target]
+    cur = target
+    while cur != 1:
+        selection = cur - 1
+        selection_length = dp[cur - 2]
 
-    minimum = maxsize
-    minimum_trail = None
+        if cur % 3 == 0:
+            div_by_3 = dp[cur // 3 - 1]
+            if div_by_3 < selection_length:
+                selection = cur // 3
+                selection_length = div_by_3
 
-    while stack:
-        level, x, trail = stack.pop()
-        next_level = level + 1
-        if x == 1 and level < minimum:
-            minimum = level
-            minimum_trail = sorted(trail, reverse=True)
-            continue
+        if cur % 2 == 0:
+            div_by_2 = dp[cur // 2 - 1]
+            if div_by_2 < selection_length:
+                selection = cur // 2
+                selection_length = div_by_2
 
-        steps = map(lambda ops: ops(x), operations)
-        steps = filter(
-            lambda s:
-                s != None and
-                (visited.get(s) == None or visited[x] >= next_level),
-            steps
-        )
-        steps = map(lambda s: (next_level, s, trail.union([s])), steps)
+        backtrack.append(selection)
+        cur = selection
 
-        for st in steps:
-            _, s, _ = st
-            
-            visited[s] = next_level
-            stack.append(st)
-
-    return minimum_trail
+    return dp[target - 1], backtrack
 
 target = int(stdin.readline())
-print(*solve_to_1(target))
+ops, backtrack = solve_to_1(target)
+print(ops)
+print(*backtrack)
