@@ -1,6 +1,8 @@
 from sys import stdin, maxsize
 from enum import Enum
 
+"https://www.acmicpc.net/problem/17404 RGB거리 2 <Gold IV>"
+
 RGB = Enum("RGB", "Red Green Blue")
 FULL_COLOR = set(RGB)
 
