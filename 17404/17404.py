@@ -32,7 +32,7 @@ for i in range(1, num_of_house):
             color_pool = color_pool - {start_color}
 
         for current_color in color_pool:
-            selectable_color = color_pool - {current_color}
+            selectable_color = FULL_COLOR - {current_color}
 
             current_cost = min(
                 map(lambda c: dp[start_color][i - 1][c], selectable_color)
