@@ -1,5 +1,7 @@
 from sys import stdin, maxsize
 
+"https://www.acmicpc.net/problem/2467 용액 <Gold V>"
+
 num_of_solution = int(stdin.readline())
 solutions = [int(v) for v in stdin.readline().split()]
 
