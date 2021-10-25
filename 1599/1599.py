@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/1599 민식어 <Silver I>"
+
 # N is ng
 mansik_char = "a b k d e g h i l m n N o p r s t u w y".split()
 mansik_idx = {
