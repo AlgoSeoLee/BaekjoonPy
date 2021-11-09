@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/3273 두 수의 합 <Silver III>"
+
 len_of_seq = int(stdin.readline())
 seq = [int(s) for s in stdin.readline().split()]
 seq.sort()
