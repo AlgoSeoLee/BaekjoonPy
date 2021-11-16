@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/20055 컨베이어 벨트 위의 로봇 <Silver I>"
+
 belt_len, belt_limit = map(int, stdin.readline().split())
 belt_life = deque([int(v) for v in stdin.readline().split()])
 belt_robot = deque([False for _ in range(belt_len)])
