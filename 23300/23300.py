@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/23300 웹 브라우저 2 <Silver I>"
+
 num_of_pages, num_of_ops = map(int, stdin.readline().split())
 
 current_page = None
