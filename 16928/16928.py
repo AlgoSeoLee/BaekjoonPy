@@ -1,6 +1,8 @@
 from sys import stdin
 from collections import deque
 
+"https://www.acmicpc.net/problem/16928 뱀과 사다리 게임 <Silver I>"
+
 num_of_ladder, num_of_snake = map(int, stdin.readline().split())
 
 ladder = {}
