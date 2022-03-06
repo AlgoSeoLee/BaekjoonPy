@@ -1,5 +1,7 @@
 from sys import stdin
 
+"https://www.acmicpc.net/problem/9461 파도반 수열 <Silver III>"
+
 dp = [1, 1, 1]
 
 def calc_numbers_of_triangle(target):
