@@ -10,8 +10,8 @@ def parse_quadtree(plain, start=0, limit=1):
 
     while current < length_of_plain and count_of_object < limit:
         if plain[current] == 'x':
-            (result, next_current) = parse_quadtree(plain, current + 1, 4)
-            quadtree.append(result)
+            (result, next_current) = parse_quadtree(plain, current+1, 4)
+            quadtree.append([result[0:2], result[2:4] ,True])
             current = next_current
         else:
             quadtree.append(plain[current])
@@ -19,42 +19,44 @@ def parse_quadtree(plain, start=0, limit=1):
 
         count_of_object += 1
 
-    if count_of_object == 4:
-        quadtree = [quadtree[0:2], quadtree[2:]]
-
     return (quadtree, current)
 
 def reverse_y_axis_quadtree(quadtree):
-    is_all_line = True
-    for subtree in quadtree:
+    reversed_quadtree = []
+    for subtree in quadtree[0:2]:
         if type(subtree) is list:
-            reverse_y_axis_quadtree(subtree)
+            reversed_quadtree.append(reverse_y_axis_quadtree(subtree))
         else:
-            is_all_line = False
+            reversed_quadtree.append(subtree)
 
-    if is_all_line:
-        quadtree.reverse()
+    try:
+        if quadtree[2]:
+            reversed_quadtree.reverse()
+            reversed_quadtree.append(True)
+
+    except:
+        pass
+
+    return reversed_quadtree
 
 def quadtree_to_string(quadtree):
     result = ''
-    is_all_line = True
-    count = 0
-    for subtree in quadtree:
-        count += 1
+    for subtree in quadtree[0:2]:
         if type(subtree) is str:
-            is_all_line = False
             result += subtree
         else:
             result += quadtree_to_string(subtree)
 
-    if count == 2 and is_all_line:
-        return 'x' + result
+    try:
+        if quadtree[2]:
+            return 'x' + result
+    except:
+        pass
         
     return result
 
-
-(result, _) = parse_quadtree('xxwwwbxwxwbbbwwxxxwwbbbwwwwbb')
-print(result)
-reverse_y_axis_quadtree(result)
-print(result)
-print(quadtree_to_string(result))
+num_of_test_case = int(stdin.readline())
+for _ in range(num_of_test_case):
+    (result, _) = parse_quadtree(stdin.readline())
+    result = reverse_y_axis_quadtree(result)
+    print(quadtree_to_string(result))
